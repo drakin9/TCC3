@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <!-- Pré-conexão com fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Arquivos CSS, os caminhos partem de public -->
+    <link rel="stylesheet" href="/assets/css/main.css" />
+    <link rel="stylesheet" href="/assets/css/agenda.css" />
+    <link rel="stylesheet" href="/assets/css/modal.css" />
+    <link rel="stylesheet" href="/assets/css/responsive.css" />
+    <title>VetControl - Agenda</title>
+  </head>
+  <body>
+    <main>
+      <section class="side-bar">
+        <div class="logo">
+          <img
+            src="/assets/images/logo.png"
+            class="imagem"
+            alt="Logo VetControl"
+          />
+        </div>
+        <nav>
+          <a href="/lista-pets"
+            ><img src="/assets/images/home.png" alt="Lista de Pets" />Lista de
+            Pets</a
+          >
+          <a href="/agenda"
+            ><img src="/assets/images/calendar.png" alt="Agenda" />Agenda</a
+          >
+          <a href="/estoque"
+            ><img src="/assets/images/stock.png" alt="Estoque" />Estoque</a
+          >
+          <a href="/financeiro"
+            ><img src="/assets/images/finance.png" alt="Financeiro" />Painel
+            Financeiro</a
+          >
+          <a href="/relatorios"
+            ><img
+              src="/assets/images/relatorios.png"
+              alt="Relatórios"
+            />Relatórios</a
+          >
+        </nav>
+      </section>
+
+      <div class="main2">
+        <header class="top-bar">
+          <div class="left-side">
+            <div class="logo">
+              <div class="imagem"></div>
+              <h1>VetControl</h1>
+            </div>
+          </div>
+          <div class="right-side">
+            <img
+              class="userImage"
+              src="/assets/images/User.png"
+              alt="Usuário"
+            />
+            <span class="userName">Dr. Ernandes</span>
+          </div>
+          <div class="mobile-modal-button">
+            <img src="/assets/images/burguer-icon-mobile.png" alt="Menu" />
+          </div>
+        </header>
+
+        <!-- conteudo ta aq -->
+        <main>
+          <section class="appointments-list">
+            <% agendamentos.forEach(appointment => { %>
+            <div class="appointment">
+              <div class="pet-info">
+                <!-- imagem não funciona por motivos que desconheço -->
+                <img
+                  src="/assets/images/<%= appointment.petTipo %>.png"
+                  alt="<%= appointment.petTipo %>"
+                />
+                <h2><%= appointment.petNome %> (<%= appointment.raca %>)</h2>
+                <p>Tutor: <%= appointment.tutorNome %></p>
+              </div>
+              <div class="buttons">
+                <button><%= appointment.status %></button>
+                <button><%= appointment.tipoConsulta %></button>
+              </div>
+              <div class="date-info">
+                <div>
+                  <span>Data:</span>
+                  <span>
+                    <%= new
+                    Date(appointment.dataConsulta).toLocaleDateString('pt-BR', {
+                    day: '2-digit', month: '2-digit', year: 'numeric' }) %>
+                  </span>
+                </div>
+                <div>
+                  <span>Horário:</span>
+                  <span><%= appointment.horario %></span>
+                </div>
+                <div>
+                  <span>Sala:</span>
+                  <span><%= appointment.sala %></span>
+                </div>
+              </div>
+            </div>
+            <% }) %>
+          </section>
+        </main>
+      </div>
+
+      <!-- Botão para abrir modal de cadastro -->
+      <div class="add-pet"><span>+</span></div>
+    </main>
+
+    <!-- Modal para adicionar pet -->
+    <div class="modal-add-pet-profile" style="display: none">
+      <div class="close">X</div>
+      <div class="profile-pet-modal">
+        <p>Espécies:</p>
+        <div class="especies">
+          <img
+            class="especie"
+            id="especieGato"
+            src="/assets/images/cat.png"
+            alt="Gato"
+          />
+          <img
+            class="especie"
+            id="especieCachorro"
+            src="/assets/images/dog.png"
+            alt="Cachorro"
+          />
+          <img
+            class="especie"
+            id="especieHamster"
+            src="/assets/images/hamster.png"
+            alt="Hamster"
+          />
+          <img
+            class="especie"
+            id="especiePassaro"
+            src="/assets/images/bird.png"
+            alt="Pássaro"
+          />
+        </div>
+      </div>
+      <form id="formAddPet" action="/agenda" method="POST">
+        <div class="appointment-form">
+          <div>
+            <label for="petNome">Nome do pet</label>
+            <input type="text" id="petNome" name="petNome" value="" />
+          </div>
+          <div>
+            <label for="petAnoNascimento">Idade do Pet</label>
+            <input type="number" id="petAnoNascimento" value="" />
+          </div>
+          <div>
+            <label for="petRaca">Raça</label>
+            <select id="petRaca" disabled name="petRaca"></select>
+          </div>
+          <div>
+            <label for="sexo">Sexo</label>
+            <select id="sexo" name="sexo">
+              <option value="">Selecione o sexo</option>
+              <option value="Macho">Macho</option>
+              <option value="Fêmea">Fêmea</option>
+            </select>
+          </div>
+          <div>
+            <label for="petPeso">Peso do pet</label>
+            <input
+              type="text"
+              maxlength="5"
+              id="petPeso"
+              placeholder="Peso em quilos"
+              value=""
+              name="petPeso"
+            />
+          </div>
+          <div>
+            <label for="alergiasPet">Alergia</label>
+            <select id="alergiasPet" name="alergiasPet">
+              <option value="">Selecione a alergia</option>
+              <option value="Tem alergia">Tem alergia</option>
+              <option value="Não tem alergia">Não tem alergia</option>
+              <option value="Não sei">Não sei se tem alergia</option>
+            </select>
+          </div>
+          <div>
+            <label for="petVacinas">Status de Vacinação</label>
+            <select id="petVacinas" name="petVacinas">
+              <option value="">Selecione o status</option>
+              <option value="Em dia">Em dia</option>
+              <option value="Precisa tomar">Precisa tomar</option>
+              <option value="Nunca tomou">Nunca tomou</option>
+            </select>
+          </div>
+        </div>
+        <div class="appointment-form">
+          <div>
+            <label for="tutorNome">Nome do Tutor</label>
+            <input type="text" id="tutorNome" name="tutorNome" value="" />
+          </div>
+          <div>
+            <label for="cpf">CPF</label>
+            <input type="number" id="cpf" name="cpf" value="" />
+          </div>
+          <div>
+            <label for="telefone">Telefone</label>
+            <input
+              type="text"
+              id="telefone"
+              minlength="15"
+              maxlength="15"
+              value=""
+              name="telefone"
+            />
+          </div>
+          <div>
+            <label for="endereco">Endereço</label>
+            <input type="text" id="endereco" value="" name="endereco" />
+          </div>
+        </div>
+        <div class="appointment-form">
+          <div>
+            <label for="tipoConsulta">Tipo de Consulta</label>
+            <select id="tipoConsulta" name="tipoConsulta">
+              <option value="">Selecione uma consulta</option>
+              <option value="Consulta de Rotina">Consulta de Rotina</option>
+              <option value="Primeira Consulta">Primeira Consulta</option>
+              <option value="Consulta Especializada">
+                Consulta Especializada
+              </option>
+            </select>
+          </div>
+          <div>
+            <label for="dataConsulta">Data</label>
+            <input type="date" id="dataConsulta" name="dataConsulta" value="" />
+          </div>
+          <div>
+            <label for="horario">Horário</label>
+            <select id="horario" name="horario">
+              <option value="">Selecione um horário</option>
+              <option value="08:00">08:00</option>
+              <option value="08:30">08:30</option>
+              <option value="09:00">09:00</option>
+              <option value="09:30">09:30</option>
+              <option value="10:00">10:00</option>
+              <option value="10:30">10:30</option>
+              <option value="11:00">11:00</option>
+              <option value="11:30">11:30</option>
+              <option value="12:00">12:00</option>
+              <option value="12:30">12:30</option>
+            </select>
+          </div>
+          <div>
+            <label for="doutor">Doutor(a)</label>
+            <input type="text" id="doutor" name="doutor" />
+          </div>
+          <button type="submit">Confirmar</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Inclusão dos arquivos de script. Ajuste os caminhos se necessário -->
+    <script src="/js/modalAgenda.js" defer></script>
+    <script src="/js/sideBar.js" defer></script>
+  </body>
+</html>
