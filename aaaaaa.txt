@@ -1,0 +1,39 @@
+<div class="modal-dashboard">
+          <div class="close">X</div>
+          <div class="profile-pet-modal">
+            <img src="../../assets/images/dog.png" alt="Foto do pet" />
+            <div class="pet-info-modal">
+              <h3>Tobias</h3>
+              <p><span>Idade</span>-<span>Gênero</span>-<span>Peso</span></p>
+            </div>
+            <h3>Labrador</h3>
+            <h3>Guilherme Oliveira Alves</h3>
+          </div>
+          <div class="new-appointment">
+            <div class="title">
+              <h1>
+                <img
+                  src="/assets/images/calendar.png"
+                  alt="Ícone de novo agendamento"
+                />Novo Agendamento
+              </h1>
+            </div>
+            <form>
+              <div class="inputs">
+                <div>
+                  <p>Data</p>
+                  <input type="date" name="date" />
+                </div>
+                <div>
+                  <p>Tipo de Consulta</p>
+                  <input type="text" />
+                </div>
+                <div>
+                  <p>Doutor(a)</p>
+                  <input type="text" />
+                </div>
+              </div>
+              <button class="new-appointment-button">Confirmar</button>
+            </form>
+          </div>
+        </div>
